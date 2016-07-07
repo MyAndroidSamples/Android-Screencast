@@ -1,0 +1,68 @@
+<project name="androidscreencast" default="jar" basedir=".">
+  <description>
+        Android Screen Cast build file
+  </description>
+  <!-- set global properties for this build -->
+  <property name="src" location="src"/>
+  <property name="build" location="bin"/>
+  <property name="dist"  location="dist"/>
+  <property file="../${ant.project.name}.conf"/>
+  <property name="mainjar" value="${ant.project.name}-${version}.jar"/>
+  <property name="ddmlib" value="ddmlib-${version}.jar"/>
+  <property name="sdk-libdir" value="${android.sdk}/tools/lib"/>
+  <property name="sdk-ddmlib" value="${sdk-libdir}/ddmlib.jar"/>
+  <property name="sadir"  location="sa"/>
+  <property name="sajar" value="${sadir}/${ant.project.name}-${version}.jar"/>
+
+  <target name="init">
+    <!-- Create the time stamp -->
+    <tstamp/>
+    <!-- Create the build directory structure used by compile -->
+    <mkdir dir="${build}"/>
+  </target>
+
+  <target name="compile" depends="init"
+        description="compile the source " >
+    <!-- Compile the java code from ${src} into ${build} -->
+    <javac nowarn="true" srcdir="${src}" destdir="${build}" classpath="${sdk-ddmlib}"/>
+  </target>
+
+  <target name="dist" depends="compile"
+        description="generate the distribution" >
+ 
+    <!-- Put everything in ${build} into the MyProject-${DSTAMP}.jar file -->
+  	<mkdir dir="${dist}"/>
+  	<copy file="${sdk-ddmlib}" tofile="${dist}/${ddmlib}"/>
+  	<copy file="MyInjectEventApp.jar" tofile="${dist}/MyInjectEventApp.jar"/>
+    <jar jarfile="${dist}/${mainjar}" basedir="${build}"/>
+  </target>
+
+  <target name="jar" depends="compile"
+    description="generate standalone jar">
+  	<mkdir dir="${sadir}"/>
+    <jar destfile="${sajar}" >
+
+      <manifest>
+        <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
+        <attribute name="Rsrc-Main-Class" value="net.srcz.android.screencast.Main"/>
+        <attribute name="Class-Path" value="."/>
+        <attribute name="Rsrc-Class-Path" value="./ ddmlib.jar"/>
+      </manifest>
+
+      <zipfileset src="jar-in-jar-loader.zip"/>
+      <fileset dir="${build}"/>
+      <fileset dir="${sdk-libdir}" includes="ddmlib.jar"/>
+      <fileset dir="./" includes="MyInjectEventApp.jar"/>
+      <fileset dir="${src}" includes="net/srcz/android/screencast/ui/**/*.png"/>
+    </jar>
+  </target>
+
+  <target name="clean"
+        description="clean up" >
+    <!-- Delete the ${build} and ${dist} directory trees -->
+    <delete dir="${build}"/>
+    <delete dir="${dist}"/>
+    <delete dir="${sadir}"/>
+  </target>
+</project>
+

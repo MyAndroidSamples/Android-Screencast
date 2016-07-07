@@ -1,0 +1,28 @@
+<project basedir="." default="build" name="AndroidScreencastClient">
+    <property environment="env"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="build" value="bin"/>
+    <property file="../${ant.project.name}.conf"/>
+    <property name="api-level" value="19"/>
+    <property name="sdk-libdir" value="${android.sdk}/platforms/android-${api-level}"/>
+    <target name="clean">
+        <delete dir="${build}"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target name="build">
+        <mkdir dir="${build}"/>
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="${build}" classpath="${sdk-libdir}/android.jar">
+            <src path="src"/>
+        </javac>
+
+        <jar destfile="MyInjectEventApp.jar">
+          <manifest/>
+
+          <fileset dir="${build}"/>
+        </jar>
+    </target>
+    <target name="Main">
+        <java classname="net.srcz.android.screencast.client.Main" failonerror="true" fork="yes"/>
+    </target>
+</project>

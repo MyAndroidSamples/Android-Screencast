@@ -1,0 +1,30 @@
+Updated Android Screencast for ICS with newer SDKs
+Homepage : https://code.google.com/r/sporzio-androidscreencast-m100/
+
+***********************
+HOW TO BUILD THE PROJET
+***********************
+-------------
+PREREQUISITES
+-------------
+Download and install the latest Android SDK bundle.
+Copy file "androidscreencast.conf.example" to parent folder.
+Rename it to "androidscreencast.conf".
+Use your text editor to tune the configuration
+
+--------------------
+BUILDING THE PROJECT
+--------------------
+If desired, build the AndroidScreencastClient first.
+Launch ant (with target dist or jar).
+
+**********************
+INFORMATION ON UPDATES
+**********************
+
+This build has been modified to build as a standalone jar file which is useful
+for use on non-network connected devices.
+This has been updated to build against newer SDKs with an updated ddmlib interface.
+The AndroidScreencastClient build process has been updated to work with ant.
+See the README file in the AndroidScreencastClient directory for details on building
+the client.

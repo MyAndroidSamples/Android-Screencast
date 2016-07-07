@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="public" author="true" classpath="D:\Android\sdk\platforms\android-19\data\layoutlib.jar;D:\Android\sdk\build-tools\23.0.3\lib\dx.jar;D:\Android\sdk\platforms\android-19\android.jar" destdir="doc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="android.view,android.os,net.srcz.android.screencast.client" source="1.5" sourcepath="src" splitindex="true" use="true" version="true">
+            <link href="http://docs.oracle.com/javase/7/docs/api/"/>
+        </javadoc>
+    </target>
+</project>

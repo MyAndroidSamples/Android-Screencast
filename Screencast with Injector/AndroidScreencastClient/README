@@ -1,0 +1,23 @@
+Updated Android Screencast for ICS with newer SDKs
+Homepage : https://code.google.com/r/sporzio-androidscreencast-m100/
+
+***********************
+HOW TO BUILD THE PROJET
+***********************
+
+-------------
+PREREQUISITES
+-------------
+Ensure that the androidscreencast.conf in the parent folder is configured for your build.
+
+In order to make your jar file suitable to run on an android device, you must
+have access to the dx and aapt executables.  These are currently distrubuted via AOSP under
+the platform/prebuilts/sdk project as linked below.
+https://android.googlesource.com/platform/prebuilts/sdk/+/master/tools/
+
+--------------------
+BUILDING THE PROJECT
+--------------------
+- Launch ant (with target build).
+- Execute ./MyInjectEventApp.sh
+- Build the main AndroidScreencast project
