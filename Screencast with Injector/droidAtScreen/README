@@ -1,0 +1,9 @@
+Android Screencast with Swings Java & ADB
+---------------------------
+
+If your device is rooted then you can control android device from/to Java desktop application. 
+
+Execute jar file 
+----------------
+
+java -jar droidAtScreen-1.2.jar

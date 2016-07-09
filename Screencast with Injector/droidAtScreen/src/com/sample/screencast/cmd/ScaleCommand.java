@@ -1,0 +1,60 @@
+/*
+ * Project:  droidAtScreen
+ * File:     ScaleCommand.java
+ * Modified: 2012-03-22
+ *
+ * Copyright (C) 2011, Ribomation AB (Jens Riboe).
+ * http://blog.ribomation.com/
+ *
+ * You are free to use this software and the source code as you like.
+ * We do appreciate if you attribute were it came from.
+ */
+
+package com.sample.screencast.cmd;
+
+import javax.swing.JDialog;
+
+import com.sample.screencast.Application;
+import com.sample.screencast.gui.DeviceFrame;
+
+/**
+ * Set the device frame projection scale, as a percentage.
+ * <p/>
+ * User: Jens Created: 2012-03-22, 22:18
+ */
+public class ScaleCommand extends CommandWithTarget<DeviceFrame> {
+	public ScaleCommand(DeviceFrame deviceFrame) {
+		super(deviceFrame);
+		setIcon("scale");
+		updateButton(deviceFrame);
+	}
+
+    @Override
+    protected void doExecute(Application app, final DeviceFrame deviceFrame) {
+        final JDialog dlg = PreferredScaleCommand.createScaleDialog(app, deviceFrame.getScale(),
+                new PreferredScaleCommand.OnScaleUpdatedListener() {
+                    @Override
+                    public void onScaleUpdated(int value) {
+                        getLog().debug("onScaleUpdated: value=" + value);
+                        updateButton(deviceFrame);
+                        deviceFrame.updateScale(value);
+                    }
+
+                    @Override
+                    public void onFinishScaleUpdated(int value) {
+                        getLog().debug("onFinishScaleUpdated: value=" + value);
+                        deviceFrame.updateScale(value);
+                        deviceFrame.pack();
+                        deviceFrame.invalidate();
+                        deviceFrame.repaint();
+                    }
+                });
+        dlg.setLocationRelativeTo(deviceFrame);
+        dlg.setVisible(true);
+    }
+
+	@Override
+	protected void updateButton(DeviceFrame deviceFrame) {
+		setTooltip(String.format("Current scale (%d%%)", deviceFrame.getScale()));
+	}
+}
